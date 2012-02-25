@@ -1,0 +1,26 @@
+This program will encrypt and decrypt data streams via one-time-pad.  It takes input from stdin and outputs to stdout.  A one-time-pad file must be supplied as the first and only argument.  This file will be consumed "head-first" with each usage, by the amount of bytes encrypted or decrypted.
+
+Example usage:
+
+First, generate a one-time-pad:
+
+dd if=/dev/random of=one-time-pad count=1024    ;Store random bytes to file.
+
+Give a single copy to a friend (do not send over wire; be mindfull of every location these bytes reside on disk).
+
+Next, encrypt a file:
+(make sure there is enough data left in the one-time-pad; this operation will consume [size of input] bytes of one-time-pad)
+
+cat some-input-file.any-type | 1tp one-time-pad > output-file
+
+Send this file however you please; it's contents are mathematically proven to be 100%% cryptographically secure, assuming the one-time-pad was truly random and kept physically secure.
+
+Lastly, have your friend decrypt the file:
+(this operation will consume [size of input] bytes of one-time-pad)
+
+cat output-file | 1tp one-time-pad > some-input-file.any-type
+
+Considerations:
+Size of data is not encrypted.
+This work is dedicated to the memory of Claude Elwood Shannon.
+Special thanks to Gilbert Sandford Vernam.
